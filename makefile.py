@@ -32,9 +32,9 @@ def printc(
     source: str,
 ) -> None:
     """
-    Print the ANSI colorized string to standard output.
+    Print the ANSI colorized string to the standard output.
 
-    :param source: String processed using inline color directives.
+    :param source: String processed using inline directives.
     """
 
     source = (
@@ -55,9 +55,9 @@ def makefile(
     source: str = 'Makefile',
 ) -> None:
     """
-    Print the Makefile summary in human friendly format.
+    Print the Makefile summary in the human friendly format.
 
-    :param source: Complete or relative filesystem path for enumeration.
+    :param source: Complete or relative path to the makefile.
     """
 
     contents = Path(source).read_text(encoding='utf-8')
