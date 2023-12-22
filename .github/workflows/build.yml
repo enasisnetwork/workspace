@@ -1,0 +1,48 @@
+---
+
+
+
+name: Validate
+
+
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+
+
+jobs:
+
+  linters:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Requirements
+        run: |
+          pip install --upgrade pip
+          pip install -r reqs-develop.txt
+
+      - name: Mypy
+        run: mypy makefile.py
+
+      - name: Flake8
+        run: flake8 makefile.py
+
+      - name: Pylint
+        run: pylint makefile.py
+
+      - name: yamllint
+        run: yamllint .yamllint .github

@@ -1,0 +1,21 @@
+---
+
+
+
+extends: default
+
+
+
+rules:
+
+  comments:
+    require-starting-space: no
+
+  empty-lines:
+    max: 3
+
+  truthy:
+    allowed-values: ['yes', 'no']
+
+  line-length:
+    max: 90
