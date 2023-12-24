@@ -1,8 +1,8 @@
 """
 Operation recipes for managing the projects and execution environment.
 
-This file is part of Enasis Network software eco-system. Distribution is
-permitted, for more information consult the project license file.
+This file is part of Enasis Network software eco-system. Distribution
+is permitted, for more information consult the project license file.
 
 This file is present within multiple projects, simplifying dependencies.
 """
@@ -28,17 +28,17 @@ COLOR = environ.get('COLOR', 7)
 
 
 
-def printc(
-    source: str,
+def makeout(
+    string: str,
 ) -> None:
     """
     Print the ANSI colorized string to the standard output.
 
-    :param source: String processed using inline directives.
+    :param string: String processed using inline directives.
     """
 
-    source = (
-        source
+    string = (
+        string
         .replace('<cD>', f'<c3{COLOR}>')
         .replace('<cL>', f'<c9{COLOR}>')
         .replace('<cZ>', '<c0>'))
@@ -47,30 +47,45 @@ def printc(
     replace = r'\033[0;\1m'
 
     stdout.write(
-        re_sub(pattern, replace, source))
+        re_sub(pattern, replace, string))
+
+
+
+def makeread(
+    path: str,
+) -> str:
+    """
+    Return the contents using the provided filesystem path.
+
+    :returns: Contents using the provided filesystem path.
+    """
+
+    return (
+        Path(path)
+        .read_text(encoding='utf-8'))
 
 
 
 def makefile(
-    source: str = 'Makefile',
+    path: str = 'Makefile',
 ) -> None:
     """
     Print the Makefile summary in the human friendly format.
 
-    :param source: Complete or relative path to the makefile.
+    :param path: Complete or relative path to the makefile.
     """
 
-    contents = Path(source).read_text(encoding='utf-8')
+    contents = makeread(path)
 
     pattern = (
         r'^(\S+):(\s+[\.\S+\-]+)?\n'
         r'\s+\@\#\#\s+([^\n]+)$')
 
-    matches = re_findall(pattern, contents, MULTILINE)
+    matches = re_findall(
+        pattern, contents, MULTILINE)
 
     for match in matches:
-
-        printc(
+        makeout(
             f'  <c9{COLOR}>{match[0]}'
             f'  <c0>{match[2]}\n')
 
@@ -89,21 +104,32 @@ def children() -> None:
     def _value(
         key: str,
     ) -> Optional[str]:
-        pattern = rf'^{key} \+?= ([^\n]+)'
-        matches = re_findall(pattern, contents, MULTILINE)
-        assert len(matches) in [0, 1]
-        return matches[0] if matches else None
+
+        matches = re_findall(
+            rf'^{key} \+?= ([^\n]+)',
+            contents,
+            MULTILINE)
+
+        if len(matches) == 0:
+            return None
+
+        assert len(matches) == 1
+
+        return str(matches[0])
 
 
     def _print(
         recipe: str,
         about: str,
     ) -> None:
-        printc(f'  <c9{COLOR}>{recipe} <c0>{about}\n')
+
+        makeout(
+            f'  <c9{COLOR}>{recipe}'
+            f' <c0>{about}\n')
 
 
     for recipe in recipes:
-        contents = Path(recipe).read_text(encoding='utf-8')
+        contents = makeread(recipe)
         pkey = _value('WKSP_PROJKEY')
         base = _value(f'WKSP_{pkey}_BASE')
         path = _value(f'WKSP_{pkey}_PATH')
@@ -111,27 +137,33 @@ def children() -> None:
         gitr = _value(f'WKSP_{pkey}_GITR')
         gitb = _value(f'WKSP_{pkey}_GITB')
 
-        printc(f'\n <c90>{base}/<c37>{path}<cZ>\n')
+        makeout(
+            f'\n <c90>{base}/'
+            f'<c37>{path}<cZ>\n')
 
         if make == pkey:
             _print(
                 f'{path}-make',
-                'Interact with the makefile recipes')
+                'Interact with the'
+                ' makefile recipes')
 
         if gitr is not None:
             _print(
                 f'{path}-clone',
-                'Clone the project Git repository')
+                'Clone the project'
+                ' Git repository')
 
         if gitr or gitb:
             _print(
                 f'{path}-git',
-                'Manage the project Git repository')
+                'Manage the project'
+                ' Git repository')
 
         if gitr is not None:
             _print(
                 f'{path}-remove',
-                'Remove the project Git repository')
+                'Remove the project'
+                ' Git repository')
 
         makefile(recipe)
 
@@ -139,7 +171,7 @@ def children() -> None:
 
 if __name__ == '__main__':
 
-    printc(
+    makeout(
         f' <c97>{PROJECT.name}/<c0>'
         f'<c37>{VERSION}<c0>'
         f' <c90>Makefile<c0>\n\n')

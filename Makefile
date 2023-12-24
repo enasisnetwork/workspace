@@ -1,7 +1,7 @@
 # Operation recipes for managing the projects and execution environment.
 #
-# This file is part of Enasis Network software eco-system. Distribution is
-# permitted, for more information consult the project license file.
+# This file is part of Enasis Network software eco-system. Distribution
+# is permitted, for more information consult the project license file.
 #
 # This file is present within multiple projects, simplifying dependencies.
 
@@ -15,7 +15,7 @@ MAKE_PYTHON ?= /usr/bin/env python3
 
 MAKE_COLOR ?= 6
 MAKE_PRINT1 = @COLOR=$(MAKE_COLOR) $(MAKE_PYTHON) \
-	-Bc 'import makefile; makefile.printc("$(1)");'
+	-Bc 'import makefile; makefile.makeout("$(1)");'
 
 MAKE_PRINT2 = $(call MAKE_PRINT1,<cD>><cL>>><cZ> $1)
 MAKE_PRINT3 = $(call MAKE_PRINT1,  <cL>●<cZ>$1)
