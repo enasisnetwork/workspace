@@ -33,3 +33,4 @@ flake8-super
 flake8-use-pathlib
 mypy
 pylint
+yamllint
