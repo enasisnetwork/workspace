@@ -115,7 +115,7 @@ def children() -> None:
 
         assert len(matches) == 1
 
-        return matches[0]
+        return str(matches[0])
 
 
     def _print(
