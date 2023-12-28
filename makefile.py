@@ -16,7 +16,6 @@ from re import MULTILINE
 from re import findall as re_findall
 from re import sub as re_sub
 from sys import stdout
-from typing import get_args
 from typing import Literal
 from typing import Optional
 
@@ -175,8 +174,6 @@ def children() -> None:
         make = _value('WKSP_MEXTEND')
 
         keys: set[str] = set()
-
-        dynamics: dict[str, dict] = {}
 
         if base is not None:
             keys.update(_keys(base))
