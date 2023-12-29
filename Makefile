@@ -122,6 +122,14 @@ pyenv-remove:
 		project repository..<c0>)
 	@rm -rf Execution/PyEnv
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Removing <c90>PyEnv<c37>\
+		symbolic Python links..<c0>)
+	@rm Execution/python39
+	@rm Execution/python310
+	@rm Execution/python311
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
@@ -144,6 +152,7 @@ endif
 		-m pip install --upgrade pip
 	@Execution/PyEnv/versions/$(pyenv_version)/bin/python \
 		-m pip install pyyaml selinux
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
