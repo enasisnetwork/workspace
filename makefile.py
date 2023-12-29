@@ -16,9 +16,9 @@ from re import MULTILINE
 from re import findall as re_findall
 from re import sub as re_sub
 from sys import stdout
-from typing import get_args
 from typing import Literal
 from typing import Optional
+from typing import get_args
 
 
 
