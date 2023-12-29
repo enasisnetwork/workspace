@@ -16,6 +16,7 @@ from re import MULTILINE
 from re import findall as re_findall
 from re import sub as re_sub
 from sys import stdout
+from typing import get_args
 from typing import Literal
 from typing import Optional
 
@@ -27,14 +28,14 @@ VERSION = '1.0.1'
 
 COLOR = environ.get('COLOR', 7)
 
-PREFICES = Literal[
+PREFIX = Literal[
     'text', 'base', 'more']
 
 
 
 def makeout(
     string: str,
-    prefix: Optional[PREFICES] = None,
+    prefix: Optional[PREFIX] = None,
 ) -> None:
     """
     Print the ANSI colorized string to the standard output.
@@ -52,7 +53,9 @@ def makeout(
 
     if prefix:
 
-        string = f'{string.lstrip(" ")}\n'
+        assert prefix in get_args(PREFIX)
+
+        string = f'{string.lstrip(" ")}'
 
         padding = 3
         _prefix = ''
@@ -71,7 +74,7 @@ def makeout(
 
 
     string = (
-        string
+        f'{string}\n'
         .replace('<cD>', f'<c3{COLOR}>')
         .replace('<cL>', f'<c9{COLOR}>'))
 
@@ -120,7 +123,7 @@ def makefile(
     for match in matches:
         makeout(
             f'  <c9{COLOR}>{match[0]}'
-            f'  <c0>{match[4]}\n')
+            f'  <c0>{match[4]}')
 
 
 
@@ -138,15 +141,12 @@ def children() -> None:
     def _value(
         key: str,
     ) -> Optional[str]:
-
         matches = re_findall(
             rf'^{key} \+?= ([^\n]+)',
             content,
             MULTILINE)
-
         if len(matches) == 0:
             return None
-
         return str(matches[-1])
 
 
@@ -156,15 +156,14 @@ def children() -> None:
     ) -> None:
         makeout(
             f'  <c9{COLOR}>{recipe}'
-            f'  <c0>{about}\n')
+            f'  <c0>{about}')
 
 
     def _keys(
         keys: str,
     ) -> list[str]:
-        return (
-            re_sub(r'\s{2,}', ' ', keys)
-            .split(' '))
+        keys = re_sub(r'\s{2,}', ' ', keys)
+        return keys.split(' ')
 
 
     for file in makefiles:
@@ -181,7 +180,7 @@ def children() -> None:
         if make is not None:
             keys.update(_keys(make))
 
-        for key in keys:
+        for key in sorted(keys):
 
             base = _value(f'WKSP_{key}_BASE')
             path = _value(f'WKSP_{key}_PATH')
@@ -193,7 +192,7 @@ def children() -> None:
 
             makeout(
                 f'\n <c90>{base}/'
-                f'<c37>{path}<c0>\n')
+                f'<c37>{path}<c0>')
 
             if make == key:
                 _print(
@@ -228,7 +227,7 @@ if __name__ == '__main__':
     makeout(
         f' <c97>{PROJECT.name}/<c0>'
         f'<c37>{VERSION}<c0>'
-        f' <c90>Makefile<c0>\n\n')
+        f' <c90>Makefile<c0>\n')
 
     makefile()
 
