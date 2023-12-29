@@ -14,21 +14,25 @@
 MAKE_PYTHON ?= /usr/bin/env python3
 
 MAKE_COLOR ?= 6
-MAKE_PRINT1 = @COLOR=$(MAKE_COLOR) $(MAKE_PYTHON) \
-	-Bc 'import makefile; makefile.makeout("$(1)");'
 
-MAKE_PRINT2 = $(call MAKE_PRINT1,<cD>><cL>>><cZ> $1)
-MAKE_PRINT3 = $(call MAKE_PRINT1,  <cL>●<cZ>$1)
-MAKE_PRINT4 = $(call MAKE_PRINT1,   $1)
+MAKE_PRINT = @COLOR=$(MAKE_COLOR) \
+	$(MAKE_PYTHON) -Bc 'if 1: \
+		from makefile import makeout; \
+		makeout("$(1)", "$(2)");'
+
+MAKE_PR1NT = $(call MAKE_PRINT,$(1),text)
+MAKE_PR2NT = $(call MAKE_PRINT,$(1),base)
+MAKE_PR3NT = $(call MAKE_PRINT,$(1),more)
 
 
 
 .PHONY: help
 help:
 	@## Construct this helpful menu of recipes
-	$(call MAKE_PRINT1,\n)
-	@COLOR=$(MAKE_COLOR) ${MAKE_PYTHON} -B makefile.py
-	$(call MAKE_PRINT1,\n)
+	$(call MAKE_PRINT)
+	@COLOR=$(MAKE_COLOR) \
+		$(MAKE_PYTHON) -B makefile.py
+	$(call MAKE_PRINT)
 
 
 
@@ -42,17 +46,18 @@ help:
 setup:
 	@## Setup relevant directories for projects
 	@#
-	$(call MAKE_PRINT2,<cD>make <cL>setup<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>setup<c0>)
 	@#
-	$(call MAKE_PRINT3,\
-		<c37>Creating standard directories..<cZ>\n)
+	$(call MAKE_PR3NT,\
+		<c37>Creating directories..<c0>)
 	@mkdir -p Configure
 	@mkdir -p Execution
 	@mkdir -p Override
 	@mkdir -p Persistent
 	@mkdir -p Projects
 	@mkdir -p Temporary
-	$(call MAKE_PRINT4, <cL>DONE<cZ>\n)
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 	@#
 	$(MAKE) pyenv-install pyenv_version=3.9.13
 	@ln -sr Execution/PyEnv/versions/3.9.13 \
@@ -70,17 +75,19 @@ setup:
 
 .PHONY: pyenv-clone
 pyenv-clone:
-	@## Clone PyEnv repository to local directory
+	@## Clone the PyEnv project into execution
 	@#
-	$(call MAKE_PRINT2,<cD>make <cL>pyenv-clone<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>pyenv-clone<c0>)
 	@#
-	$(call MAKE_PRINT3,\
-		<c37>Cloning <c90>PyEnv<c37>..<cZ>\n)
+	$(call MAKE_PR3NT,\
+		<c37>Cloning <c90>PyEnv<c37>\
+		project repository..<c0>)
 	@if [ ! -d 'Execution/PyEnv' ]; then \
 		git clone https://github.com/pyenv/pyenv.git \
 		Execution/PyEnv 2>/dev/null; \
 	fi
-	$(call MAKE_PRINT4, <cL>DONE<cZ>\n)
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
@@ -90,14 +97,16 @@ pyenv-update:
 	@#
 	$(MAKE) pyenv-clone
 	@#
-	$(call MAKE_PRINT2,<cD>make <cL>pyenv-update<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>pyenv-update<c0>)
 	@#
-	$(call MAKE_PRINT3,\
-		<c37>Updating <c90>PyEnv<c37>..<cZ>\n)
+	$(call MAKE_PR3NT,\
+		<c37>Updating <c90>PyEnv<c37>\
+		project repository..<c0>)
 	@cd Execution/PyEnv \
 		&& git remote update 1>/dev/null \
 		&& git pull --rebase 1>/dev/null
-	$(call MAKE_PRINT4, <cL>DONE<cZ>\n)
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
@@ -105,22 +114,33 @@ pyenv-update:
 pyenv-remove:
 	@## Remove local copy of PyEnv repository
 	@#
-	$(call MAKE_PRINT2,<cD>make <cL>pyenv-remove<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>pyenv-remove<c0>)
 	@#
-	$(call MAKE_PRINT3,\
-		<c37>Removing <c90>PyEnv<c37>..<cZ>\n)
+	$(call MAKE_PR3NT,\
+		<c37>Removing <c90>PyEnv<c37>\
+		project repository..<c0>)
 	@rm -rf Execution/PyEnv
-	$(call MAKE_PRINT4, <cL>DONE<cZ>\n)
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Removing <c90>PyEnv<c37>\
+		symbolic Python links..<c0>)
+	@rm Execution/python39
+	@rm Execution/python310
+	@rm Execution/python311
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
 .PHONY: pyenv-install
 pyenv-install:
-	@## Download and compile Python version
+	@## Download and compile the Python version
 	@#
 	$(MAKE) pyenv-update
 	@#
-	$(call MAKE_PRINT2,<cD>make <cL>pyenv-install<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>pyenv-install<c0>)
 	@#
 ifndef pyenv_version
 	$(error pyenv_version variable is not defined)
@@ -132,6 +152,7 @@ endif
 		-m pip install --upgrade pip
 	@Execution/PyEnv/versions/$(pyenv_version)/bin/python \
 		-m pip install pyyaml selinux
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
 
@@ -148,8 +169,8 @@ define WKSP_MAKE
 .PHONY: $(call WKSP_PATH,$(1))-make
 $(call WKSP_PATH,$(1))-make: \
 	.check-$(call WKSP_PATH,$(1))-make
-	$(call MAKE_PRINT2,<cD>make\
-		<cL>$(call WKSP_PATH,$(1))-make<cZ>\n)
+	$(call MAKE_PR2NT,<cD>make\
+		<cL>$(call WKSP_PATH,$(1))-make<c0>)
 ifndef make_args
 	@echo 'ERROR: make_args variable is not defined' >&2; exit 1
 endif
@@ -169,8 +190,8 @@ define WKSP_GIT_BASE
 .PHONY: $(call WKSP_PATH,$(1))-git
 $(call WKSP_PATH,$(1))-git: \
 	.check-$(call WKSP_PATH,$(1))-git
-	$(call MAKE_PRINT2,<cD>make\
-		<cL>$(call WKSP_PATH,$(1))-git<cZ>\n)
+	$(call MAKE_PR2NT,<cD>make\
+		<cL>$(call WKSP_PATH,$(1))-git<c0>)
 ifndef git_args
 	@echo 'ERROR: git_args variable is not defined' >&2; exit 1
 endif
@@ -188,8 +209,8 @@ define WKSP_GIT_REPO
 
 .PHONY: $(call WKSP_PATH,$(1))-clone
 $(call WKSP_PATH,$(1))-clone:
-	$(call MAKE_PRINT2,<cD>make\
-		<cL>$(call WKSP_PATH,$(1))-clone<cZ>\n)
+	$(call MAKE_PR2NT,<cD>make\
+		<cL>$(call WKSP_PATH,$(1))-clone<c0>)
 	@git clone\
 		$(if $(call WKSP_GITB,$(1)),\
 			-b $(call WKSP_GITB,$(1)))\
@@ -199,8 +220,9 @@ $(call WKSP_PATH,$(1))-clone:
 .PHONY: $(call WKSP_PATH,$(1))-remove
 $(call WKSP_PATH,$(1))-remove: \
 	.check-$(call WKSP_PATH,$(1))-git
-	$(call MAKE_PRINT2,<cD>make\
-		<cL>$(call WKSP_PATH,$(1))-remove<cZ>\n)
+	$(call MAKE_PR2NT,\
+		<cD>make\
+		<cL>$(call WKSP_PATH,$(1))-remove<c0>)
 	@$(MAKE_PYTHON) -Bc 'if 1:\
 		confirm = input("Are you sure? [y/N] ");\
 		assert confirm == "y";'
