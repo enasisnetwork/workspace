@@ -218,7 +218,8 @@ def children() -> None:
                     'Remove the project'
                     ' Git repository')
 
-        makefile(file)
+        if file != 'workspace.mk':
+            makefile(file)
 
 
 
@@ -230,4 +231,8 @@ if __name__ == '__main__':
         f' <c90>Makefile<c0>\n')
 
     makefile()
+
+    if Path('workspace.mk').exists():
+        makefile('workspace.mk')
+
     children()
