@@ -231,7 +231,4 @@ if __name__ == '__main__':
 
     makefile()
 
-    if Path('workspace.mk').exists():
-        makefile('workspace.mk')
-
     children()
