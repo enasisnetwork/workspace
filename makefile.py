@@ -233,6 +233,11 @@ if __name__ == '__main__':
     makefile()
 
     if Path('workspace.mk').exists():
+
+        makeout(
+            f'\n <c90>Workspace/'
+            f'<c37>workspace.mk<c0>')
+
         makefile('workspace.mk')
 
     children()
