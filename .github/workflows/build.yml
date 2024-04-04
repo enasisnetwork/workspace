@@ -17,6 +17,7 @@ on:
 
 jobs:
 
+
   validate311:
     name: Python 3.11
     runs-on: ubuntu-latest
@@ -27,15 +28,16 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Requirements
         run: |
           pip install --upgrade pip
           pip install -r reqs-develop.txt
-      - name: Mypy
+      - name: mypy
         run: mypy makefile.py
-      - name: Flake8
+      - name: flake8
         run: flake8 makefile.py
-      - name: Pylint
+      - name: pylint
         run: pylint makefile.py
       - name: yamllint
         run: yamllint .yamllint .github

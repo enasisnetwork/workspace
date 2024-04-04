@@ -31,6 +31,9 @@ flake8-simplify
 flake8-super
 #flake8-tabs
 flake8-use-pathlib
+
 mypy
+
 pylint
+
 yamllint

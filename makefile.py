@@ -51,11 +51,11 @@ def makeout(
     replace = r'\033[0;\1m'
 
 
-    if prefix:
-
-        assert prefix in get_args(PREFIX)
+    if prefix is not None:
 
         string = f'{string.lstrip(" ")}'
+
+        assert prefix in get_args(PREFIX)
 
         padding = 3
         _prefix = ''
@@ -89,6 +89,7 @@ def makeread(
     """
     Return the contents using the provided filesystem path.
 
+    :param path: Complete or relative path to the makefile.
     :returns: Contents using the provided filesystem path.
     """
 
@@ -141,12 +142,14 @@ def children() -> None:
     def _value(
         key: str,
     ) -> Optional[str]:
+
         matches = re_findall(
             rf'^{key} \+?= ([^\n]+)',
-            content,
-            MULTILINE)
+            content, MULTILINE)
+
         if len(matches) == 0:
             return None
+
         return str(matches[-1])
 
 
@@ -154,6 +157,7 @@ def children() -> None:
         recipe: str,
         about: str,
     ) -> None:
+
         makeout(
             f'  <c9{COLOR}>{recipe}'
             f'  <c0>{about}')
@@ -162,7 +166,9 @@ def children() -> None:
     def _keys(
         keys: str,
     ) -> list[str]:
+
         keys = re_sub(r'\s{2,}', ' ', keys)
+
         return keys.split(' ')
 
 
