@@ -59,16 +59,16 @@ setup:
 	@mkdir -p Temporary
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.9.13
-	@ln -sr Execution/PyEnv/versions/3.9.13 \
+	$(MAKE) pyenv-install pyenv_version=3.9.18
+	@ln -sr Execution/PyEnv/versions/3.9.18 \
 		Execution/python39
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.10.11
-	@ln -sr Execution/PyEnv/versions/3.10.11 \
+	$(MAKE) pyenv-install pyenv_version=3.10.13
+	@ln -sr Execution/PyEnv/versions/3.10.13 \
 		Execution/python310
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.11.4
-	@ln -sr Execution/PyEnv/versions/3.11.4 \
+	$(MAKE) pyenv-install pyenv_version=3.11.8
+	@ln -sr Execution/PyEnv/versions/3.11.8 \
 		Execution/python311
 
 
