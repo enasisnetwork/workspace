@@ -24,7 +24,7 @@ from typing import get_args
 
 PROJECT = Path(__file__).parent
 
-VERSION = '1.1.1'
+VERSION = '1.1.2'
 
 COLOR = environ.get('COLOR', 7)
 
