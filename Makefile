@@ -156,11 +156,65 @@ endif
 
 
 
+.PHONY: all-git
+all-git:
+	@## Interact with project Git repository
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>all-git<c0>)
+	@#
+	$(foreach p,$(WKSP_PROJKEY), \
+		$(eval base_dir=$(call WKSP_BASE,$(p))) \
+		$(call WKSP_GIT_CMDR,$(base_dir),$(p)))
+
+
+
+.PHONY: all-make
+all-make:
+	@## Interact with project Makefile recipes
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>all-make<c0>)
+	@#
+	$(foreach p,$(WKSP_PROJKEY), \
+		$(eval base_dir=$(call WKSP_BASE,$(p))) \
+		$(call WKSP_MAKE_CMDR,$(base_dir),$(p)))
+
+
+
 WKSP_BASE = $(WKSP_$(subst -,_,$(1))_BASE)
 WKSP_PATH = $(WKSP_$(subst -,_,$(1))_PATH)
 WKSP_FULL = $(call WKSP_BASE,$(1))/$(call WKSP_PATH,$(1))
 WKSP_GITR = $(WKSP_$(subst -,_,$(1))_GITR)
 WKSP_GITB = $(WKSP_$(subst -,_,$(1))_GITB)
+
+
+
+define WKSP_GIT_CMDR
+
+@if [ -d "$(1)/$(2)/.git" ]; then \
+	echo -e "\n\033[0;3$(MAKE_COLOR)m┍$$(printf '%.0s━' {1..63})\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(2)\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m├$$(printf '%.0s─' {1..63})\033[0m\n"; \
+	(cd $(1)/$(2) && git $(git_args)); \
+	echo -e "\n\033[0;3$(MAKE_COLOR)m┕$$(printf '%.0s━' {1..63})\033[0m\n"; \
+fi
+
+endef
+
+
+
+define WKSP_MAKE_CMDR
+
+@if [ -f "$(1)/$(2)/Makefile" ]; then \
+	echo -e "\n\033[0;3$(MAKE_COLOR)m┍$$(printf '%.0s━' {1..63})\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(2)\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m├$$(printf '%.0s─' {1..63})\033[0m\n"; \
+	(cd $(1)/$(2) && make $(make_args)); \
+	echo -e "\n\033[0;3$(MAKE_COLOR)m┕$$(printf '%.0s━' {1..63})\033[0m\n"; \
+fi
+
+endef
 
 
 
