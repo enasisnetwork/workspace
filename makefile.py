@@ -4,7 +4,7 @@ Operation recipes for managing the projects and execution environment.
 This file is part of Enasis Network software eco-system. Distribution
 is permitted, for more information consult the project license file.
 
-This file is present within multiple projects, simplifying dependencies.
+This file is present within multiple projects, simplifying dependency.
 """
 
 
