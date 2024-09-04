@@ -194,8 +194,8 @@ def children() -> None:
                 continue
 
             makeout(
-                f'\n <c90>{base}/'
-                f'<c37>{path}<c0>')
+                f'\n <c37>{base}/'
+                f'<c90>{path}<c0>')
 
             if make == key:
                 _print(
