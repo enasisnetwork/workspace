@@ -23,7 +23,7 @@ from typing import Optional
 
 PROJECT = Path(__file__).parent
 
-VERSION = '1.2.2'
+VERSION = '1.2.3'
 
 COLOR = environ.get('COLOR', 7)
 
