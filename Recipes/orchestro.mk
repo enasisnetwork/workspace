@@ -5,9 +5,10 @@
 
 
 
-WKSP_PROJKEY += sdmtlegconf
+WKSP_PROJKEY += orchestro
+WKSP_MEXTEND += orchestro
 
-WKSP_sdmtlegconf_BASE = Configure
-WKSP_sdmtlegconf_PATH = sdmt-legacy-conf
-#WKSP_sdmtlegconf_GITR
-WKSP_sdmtlegconf_GITB = master
+WKSP_orchestro_BASE = Projects
+WKSP_orchestro_PATH = orchestro
+WKSP_orchestro_GITR = git@github.com:enasisnetwork/orchestro.git
+#WKSP_orchestro_GITB
