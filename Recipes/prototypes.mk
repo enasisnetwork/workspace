@@ -5,10 +5,10 @@
 
 
 
-WKSP_PROJKEY += enstatic
-WKSP_MEXTEND += enstatic
+WKSP_PROJKEY += prototypes
+WKSP_MEXTEND += prototypes
 
-WKSP_enstatic_BASE = Projects
-WKSP_enstatic_PATH = enstatic
-WKSP_enstatic_GITR = git@github.com:enasisnetwork/enstatic.git
-#WKSP_enstatic_GITB
+WKSP_prototypes_BASE = Projects
+WKSP_prototypes_PATH = prototypes
+WKSP_prototypes_GITR = git@github.com:enasisnetwork/prototypes.git
+#WKSP_prototypes_GITB

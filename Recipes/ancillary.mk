@@ -5,9 +5,10 @@
 
 
 
-WKSP_PROJKEY += sdmtlegcert
+WKSP_PROJKEY += ancillary
+WKSP_MEXTEND += ancillary
 
-WKSP_sdmtlegcert_BASE = Configure
-WKSP_sdmtlegcert_PATH = sdmt-legacy-cert
-#WKSP_sdmtlegcert_GITR
-WKSP_sdmtlegcert_GITB = master
+WKSP_ancillary_BASE = Projects
+WKSP_ancillary_PATH = ancillary
+WKSP_ancillary_GITR = git@github.com:enasisnetwork/ancillary.git
+#WKSP_ancillary_GITB

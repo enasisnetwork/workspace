@@ -7,16 +7,18 @@
 
 
 
+PYTHON ?= /usr/bin/env python3
+
+
+
 -include workspace.env
 
 
 
-MAKE_PYTHON ?= /usr/bin/env python3
-
 MAKE_COLOR ?= 6
 
 MAKE_PRINT = @COLOR=$(MAKE_COLOR) \
-	$(MAKE_PYTHON) -Bc 'if 1: \
+	$(PYTHON) -Bc 'if 1: \
 		from makefile import makeout; \
 		makeout("$(1)", "$(2)");'
 
@@ -31,7 +33,7 @@ help:
 	@## Construct this helpful menu of recipes
 	$(call MAKE_PRINT)
 	@COLOR=$(MAKE_COLOR) \
-		$(MAKE_PYTHON) -B makefile.py
+		$(PYTHON) -B makefile.py
 	$(call MAKE_PRINT)
 
 
@@ -277,7 +279,7 @@ $(call WKSP_PATH,$(1))-remove: \
 	$(call MAKE_PR2NT,\
 		<cD>make\
 		<cL>$(call WKSP_PATH,$(1))-remove<c0>)
-	@$(MAKE_PYTHON) -Bc 'if 1:\
+	@$(PYTHON) -Bc 'if 1:\
 		confirm = input("Are you sure? [y/N] ");\
 		assert confirm == "y";'
 	@rm -rf "$(call WKSP_FULL,$(1))"

@@ -5,10 +5,10 @@
 
 
 
-WKSP_PROJKEY += sdmtleg
-WKSP_MEXTEND += sdmtleg
+WKSP_PROJKEY += pixelraw
+WKSP_MEXTEND += pixelraw
 
-WKSP_sdmtleg_BASE = Projects
-WKSP_sdmtleg_PATH = sdmt-legacy
-#WKSP_sdmtleg_GITR
-WKSP_sdmtleg_GITB = master
+WKSP_pixelraw_BASE = Projects
+WKSP_pixelraw_PATH = pixelraw
+WKSP_pixelraw_GITR = git@github.com:rawberth/pixelraw.git
+#WKSP_pixelraw_GITB
