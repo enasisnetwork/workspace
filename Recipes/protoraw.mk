@@ -5,10 +5,10 @@
 
 
 
-WKSP_PROJKEY += prototypes
-WKSP_MEXTEND += prototypes
+WKSP_PROJKEY += protoraw
+WKSP_MEXTEND += protoraw
 
 WKSP_prototypes_BASE = Projects
-WKSP_prototypes_PATH = prototypes
-WKSP_prototypes_GITR = git@github.com:enasisnetwork/prototypes.git
+WKSP_prototypes_PATH = protoraw
+WKSP_prototypes_GITR = git@github.com:rawberth/protoraw.git
 #WKSP_prototypes_GITB
