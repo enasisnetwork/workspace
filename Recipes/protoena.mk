@@ -8,7 +8,7 @@
 WKSP_PROJKEY += protoena
 WKSP_MEXTEND += protoena
 
-WKSP_prototypes_BASE = Projects
-WKSP_prototypes_PATH = protoena
-WKSP_prototypes_GITR = git@github.com:enasisnetwork/protoena.git
-#WKSP_prototypes_GITB
+WKSP_protoena_BASE = Projects
+WKSP_protoena_PATH = protoena
+WKSP_protoena_GITR = git@github.com:enasisnetwork/protoena.git
+#WKSP_protoena_GITB
