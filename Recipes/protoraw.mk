@@ -8,7 +8,7 @@
 WKSP_PROJKEY += protoraw
 WKSP_MEXTEND += protoraw
 
-WKSP_prototypes_BASE = Projects
-WKSP_prototypes_PATH = protoraw
-WKSP_prototypes_GITR = git@github.com:rawberth/protoraw.git
-#WKSP_prototypes_GITB
+WKSP_protoena_BASE = Projects
+WKSP_protoena_PATH = protoraw
+WKSP_protoena_GITR = git@github.com:rawberth/protoraw.git
+#WKSP_protoena_GITB
