@@ -52,7 +52,7 @@ def makeout(
 
     if prefix is not None:
 
-        string = f'{string.lstrip(" ")}'
+        string = string.lstrip(' ')
 
         padding = 3
         _prefix = ''
@@ -65,8 +65,10 @@ def makeout(
             padding = 2
             _prefix = '<cL>●<c0>'
 
+        space: str = ' '
+
         string = (
-            f'{" " * padding}'
+            f'{space * padding}'
             f'{_prefix} {string}')
 
 
