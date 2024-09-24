@@ -8,7 +8,12 @@ name: Validate
 
 # yamllint disable-line rule:truthy
 on:
+
+  schedule:
+    - cron: '0 2 * * *'
+
   pull_request:
+
   push:
     branches:
       - main
@@ -19,7 +24,7 @@ jobs:
 
 
   validate311:
-    name: Python 3.11
+    name: Python 3.12
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +32,7 @@ jobs:
       - name: Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Requirements
         run: |
