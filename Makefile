@@ -61,17 +61,13 @@ setup:
 	@mkdir -p Temporary
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.9.18
-	@ln -sr Execution/PyEnv/versions/3.9.18 \
-		Execution/python39
-	@#
-	$(MAKE) pyenv-install pyenv_version=3.10.13
-	@ln -sr Execution/PyEnv/versions/3.10.13 \
-		Execution/python310
-	@#
-	$(MAKE) pyenv-install pyenv_version=3.11.8
-	@ln -sr Execution/PyEnv/versions/3.11.8 \
+	$(MAKE) pyenv-install pyenv_version=3.11.10
+	@ln -sr Execution/PyEnv/versions/3.11.10 \
 		Execution/python311
+	@#
+	$(MAKE) pyenv-install pyenv_version=3.12.6
+	@ln -sr Execution/PyEnv/versions/3.12.6 \
+		Execution/python312
 
 
 
@@ -128,9 +124,8 @@ pyenv-remove:
 	$(call MAKE_PR3NT,\
 		<c37>Removing <c90>PyEnv<c37>\
 		symbolic Python links..<c0>)
-	@rm Execution/python39
-	@rm Execution/python310
 	@rm Execution/python311
+	@rm Execution/python312
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
