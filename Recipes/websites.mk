@@ -11,4 +11,3 @@ WKSP_MEXTEND += websites
 WKSP_websites_BASE = Projects
 WKSP_websites_PATH = websites
 WKSP_websites_GITR = git@github.com:enasisnetwork/websites.git
-#WKSP_websites_GITB

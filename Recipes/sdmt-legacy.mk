@@ -10,15 +10,12 @@ WKSP_MEXTEND += sdmtleg
 
 WKSP_sdmtleg_BASE = Projects
 WKSP_sdmtleg_PATH = sdmt-legacy
-#WKSP_sdmtleg_GITR
 WKSP_sdmtleg_GITB = master
 
 WKSP_sdmtlegconf_BASE = Configure
 WKSP_sdmtlegconf_PATH = sdmt-legacy-conf
-#WKSP_sdmtlegconf_GITR
 WKSP_sdmtlegconf_GITB = master
 
 WKSP_sdmtlegcert_BASE = Configure
 WKSP_sdmtlegcert_PATH = sdmt-legacy-cert
-#WKSP_sdmtlegcert_GITR
 WKSP_sdmtlegcert_GITB = master

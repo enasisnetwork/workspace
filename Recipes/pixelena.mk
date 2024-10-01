@@ -6,9 +6,7 @@
 
 
 WKSP_PROJKEY += pixelena
-WKSP_MEXTEND += pixelena
 
 WKSP_pixelena_BASE = Projects
 WKSP_pixelena_PATH = pixelena
 WKSP_pixelena_GITR = git@github.com:enasisnetwork/pixelena.git
-#WKSP_pixelena_GITB

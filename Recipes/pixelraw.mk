@@ -6,9 +6,7 @@
 
 
 WKSP_PROJKEY += pixelraw
-WKSP_MEXTEND += pixelraw
 
 WKSP_pixelraw_BASE = Projects
 WKSP_pixelraw_PATH = pixelraw
 WKSP_pixelraw_GITR = git@github.com:rawberth/pixelraw.git
-#WKSP_pixelraw_GITB
