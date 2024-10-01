@@ -189,11 +189,13 @@ WKSP_GITB = $(WKSP_$(subst -,_,$(1))_GITB)
 
 define WKSP_GIT_CMDR
 
-@if [ -d "$(1)/$(2)/.git" ]; then \
+$(eval base=$(call WKSP_PATH,$(2)))
+
+@if [ -d "$(1)/$(base)/.git" ]; then \
 	echo -e "\n\033[0;3$(MAKE_COLOR)m┍$$(printf '%.0s━' {1..63})\033[0m"; \
-	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(2)\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(base)\033[0m"; \
 	echo -e "\033[0;3$(MAKE_COLOR)m├$$(printf '%.0s─' {1..63})\033[0m\n"; \
-	(cd $(1)/$(2) && git $(git_args)); \
+	(cd $(1)/$(base) && git $(git_args)); \
 	echo -e "\n\033[0;3$(MAKE_COLOR)m┕$$(printf '%.0s━' {1..63})\033[0m\n"; \
 fi
 
@@ -203,11 +205,13 @@ endef
 
 define WKSP_MAKE_CMDR
 
-@if [ -f "$(1)/$(2)/Makefile" ]; then \
+$(eval base=$(call WKSP_PATH,$(2)))
+
+@if [ -f "$(1)/$(base)/Makefile" ]; then \
 	echo -e "\n\033[0;3$(MAKE_COLOR)m┍$$(printf '%.0s━' {1..63})\033[0m"; \
-	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(2)\033[0m"; \
+	echo -e "\033[0;3$(MAKE_COLOR)m│ $(1)/\033[0;9$(MAKE_COLOR)m$(base)\033[0m"; \
 	echo -e "\033[0;3$(MAKE_COLOR)m├$$(printf '%.0s─' {1..63})\033[0m\n"; \
-	(cd $(1)/$(2) && make $(make_args)); \
+	(cd $(1)/$(base) && make $(make_args)); \
 	echo -e "\n\033[0;3$(MAKE_COLOR)m┕$$(printf '%.0s━' {1..63})\033[0m\n"; \
 fi
 
