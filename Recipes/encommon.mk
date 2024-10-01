@@ -5,10 +5,14 @@
 
 
 
-WKSP_PROJKEY += encommon
+WKSP_PROJKEY += encommon encommonstatic
 WKSP_MEXTEND += encommon
 
 WKSP_encommon_BASE = Projects
 WKSP_encommon_PATH = encommon
 WKSP_encommon_GITR = git@github.com:enasisnetwork/encommon.git
-#WKSP_encommon_GITB
+
+WKSP_encommonstatic_BASE = Projects
+WKSP_encommonstatic_PATH = encommon-static
+WKSP_encommonstatic_GITR = git@github.com:enasisnetwork/encommon.git
+WKSP_encommonstatic_GITB = static

@@ -5,13 +5,18 @@
 
 
 
-WKSP_PROJKEY += weazel weazelconf
+WKSP_PROJKEY += weazel weazelstatic weazelconf
 WKSP_MEXTEND += weazel
-
-WKSP_weazelconf_BASE = Configure
-WKSP_weazelconf_PATH = weazel-conf
-WKSP_weazelconf_GITR = git@github.com:rawberth/weazel-conf.git
 
 WKSP_weazel_BASE = Projects
 WKSP_weazel_PATH = weazel
 WKSP_weazel_GITR = git@github.com:rawberth/weazel.git
+
+WKSP_weazelstatic_BASE = Projects
+WKSP_weazelstatic_PATH = weazel-static
+WKSP_weazelstatic_GITR = git@github.com:rawberth/weazel.git
+WKSP_weazelstatic_GITB = static
+
+WKSP_weazelconf_BASE = Configure
+WKSP_weazelconf_PATH = weazel-conf
+WKSP_weazelconf_GITR = git@github.com:rawberth/weazel-conf.git
