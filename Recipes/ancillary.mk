@@ -6,9 +6,7 @@
 
 
 WKSP_PROJKEY += ancillary
-WKSP_MEXTEND += ancillary
 
 WKSP_ancillary_BASE = Projects
 WKSP_ancillary_PATH = ancillary
 WKSP_ancillary_GITR = git@github.com:enasisnetwork/ancillary.git
-#WKSP_ancillary_GITB
