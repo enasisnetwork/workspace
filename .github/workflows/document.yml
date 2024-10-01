@@ -135,7 +135,7 @@ jobs:
 
           python makebadge.py \
             "../static/badges/flake8.png" \
-            "Flake8" $(COLOR) "$(STATUS)"
+            "Flake8" "$COLOR" "$STATUS"
 
       # Construct additional content
       - name: Build badge for Pylint
@@ -153,7 +153,7 @@ jobs:
 
           python makebadge.py \
             "../static/badges/pylint.png" \
-            "Pylint" $(COLOR) "$(STATUS)"
+            "Pylint" "$COLOR" "$STATUS"
 
       # Construct additional content
       - name: Build badge for Mypy
@@ -171,7 +171,7 @@ jobs:
 
           python makebadge.py \
             "../static/badges/mypy.png" \
-            "Mypy" $(COLOR) "$(STATUS)"
+            "Mypy" "$COLOR" "$STATUS"
 
       # Construct additional content
       - name: Build badge for YAMLlint
@@ -189,7 +189,7 @@ jobs:
 
           python makebadge.py \
             "../static/badges/yamllint.png" \
-            "YAMLlint" $(COLOR) "$(STATUS)"
+            "YAMLlint" "$COLOR" "$STATUS"
 
 
       # Save content in static branch
