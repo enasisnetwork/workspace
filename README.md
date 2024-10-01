@@ -1,6 +1,9 @@
 # Enasis Network Workspace
 
-[![](https://img.shields.io/github/actions/workflow/status/enasisnetwork/workspace/build.yml?style=flat-square&label=GitHub%20actions)](https://github.com/enasisnetwork/workspace/actions)
+<a href="https://enasisnetwork.github.io/workspace/validate/flake8.txt"><img src="https://enasisnetwork.github.io/workspace/badges/flake8.png"></a><br>
+<a href="https://enasisnetwork.github.io/workspace/validate/pylint.txt"><img src="https://enasisnetwork.github.io/workspace/badges/pylint.png"></a><br>
+<a href="https://enasisnetwork.github.io/workspace/validate/mypy.txt"><img src="https://enasisnetwork.github.io/workspace/badges/mypy.png"></a><br>
+<a href="https://enasisnetwork.github.io/workspace/validate/yamllint.txt"><img src="https://enasisnetwork.github.io/workspace/badges/yamllint.png"></a><br>
 
 General workspace environment for developing public and private projects for
 [Enasis Network](https://github.com/enasisnetwork).
