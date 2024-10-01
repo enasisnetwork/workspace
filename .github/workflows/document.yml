@@ -87,19 +87,12 @@ jobs:
       # Standard project construction
       - name: Build environment
         working-directory: main
-        run: make -s venv-create
+        run: pip install -r require.txt
 
       # Standard project construction
       - name: Build environment
         working-directory: static
         run: mkdir -p badges
-
-
-      # Construct additional content
-      - name: Build documentaiton
-        id: sphinx
-        working-directory: main
-        run: make -s sphinx
 
 
       # Construct additional content
@@ -138,11 +131,9 @@ jobs:
             COLOR="red"
           fi
 
-          make -s badge \
-            name=../static/badges/flake8.png \
-            label="Flake8" \
-            color=$COLOR \
-            value=$STATUS
+          python makebadge.py \
+            "../static/badges/flake8.png" \
+            "Flake8" \ $(COLOR) "$(STATUS)"
 
       # Construct additional content
       - name: Build badge for Pylint
@@ -158,11 +149,9 @@ jobs:
             COLOR="red"
           fi
 
-          make -s badge \
-            name=../static/badges/pylint.png \
-            label="Pylint" \
-            color=$COLOR \
-            value=$STATUS
+          python makebadge.py \
+            "../static/badges/pylint.png" \
+            "Pylint" \ $(COLOR) "$(STATUS)"
 
       # Construct additional content
       - name: Build badge for Mypy
@@ -178,11 +167,9 @@ jobs:
             COLOR="red"
           fi
 
-          make -s badge \
-            name=../static/badges/mypy.png \
-            label="Mypy" \
-            color=$COLOR \
-            value=$STATUS
+          python makebadge.py \
+            "../static/badges/mypy.png" \
+            "Mypy" \ $(COLOR) "$(STATUS)"
 
       # Construct additional content
       - name: Build badge for YAMLlint
@@ -198,11 +185,9 @@ jobs:
             COLOR="red"
           fi
 
-          make -s badge \
-            name=../static/badges/yamllint.png \
-            label="YAMLlint" \
-            color=$COLOR \
-            value=$STATUS
+          python makebadge.py \
+            "../static/badges/yamllint.png" \
+            "YAMLlint" \ $(COLOR) "$(STATUS)"
 
 
       # Save content in static branch
@@ -216,13 +201,8 @@ jobs:
           git config --global \
             user.name "GitHub Workflows"
 
-          rm -rf static/sphinx
-          mkdir static/sphinx
-          cp -r main/sphinx/html/* static/sphinx/
-
           cd static
           git add badges
-          git add sphinx
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
