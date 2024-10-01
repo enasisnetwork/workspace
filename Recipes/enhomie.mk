@@ -5,10 +5,13 @@
 
 
 
-WKSP_PROJKEY += enhomie
+WKSP_PROJKEY += enhomie enhomieconf
 WKSP_MEXTEND += enhomie
+
+WKSP_enhomieconf_BASE = Configure
+WKSP_enhomieconf_PATH = enhomie-conf
+WKSP_enhomieconf_GITR = git@github.com:enasisnetwork/enhomie-conf.git
 
 WKSP_enhomie_BASE = Projects
 WKSP_enhomie_PATH = enhomie
 WKSP_enhomie_GITR = git@github.com:enasisnetwork/enhomie.git
-#WKSP_enhomie_GITB

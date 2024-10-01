@@ -5,10 +5,13 @@
 
 
 
-WKSP_PROJKEY += enrobie
+WKSP_PROJKEY += enrobie enrobieconf
 WKSP_MEXTEND += enrobie
+
+WKSP_enrobieconf_BASE = Configure
+WKSP_enrobieconf_PATH = enrobie-conf
+WKSP_enrobieconf_GITR = git@github.com:enasisnetwork/enrobie-conf.git
 
 WKSP_enrobie_BASE = Projects
 WKSP_enrobie_PATH = enrobie
 WKSP_enrobie_GITR = git@github.com:enasisnetwork/enrobie.git
-#WKSP_enrobie_GITB
