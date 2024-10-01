@@ -5,10 +5,14 @@
 
 
 
-WKSP_PROJKEY += enconnect
+WKSP_PROJKEY += enconnect enconnectstatic
 WKSP_MEXTEND += enconnect
 
 WKSP_enconnect_BASE = Projects
 WKSP_enconnect_PATH = enconnect
 WKSP_enconnect_GITR = git@github.com:enasisnetwork/enconnect.git
-#WKSP_enconnect_GITB
+
+WKSP_enconnectstatic_BASE = Projects
+WKSP_enconnectstatic_PATH = enconnect-static
+WKSP_enconnectstatic_GITR = git@github.com:enasisnetwork/enconnect.git
+WKSP_enconnectstatic_GITB = static
