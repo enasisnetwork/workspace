@@ -13,9 +13,10 @@
 !/.yamllint
 !/LICENSE
 !/Makefile
+!/makebadge.py
 !/makefile.py
 !/README.md
-!/reqs-develop.txt
+!/require.txt
 !/setup.cfg
 
 
