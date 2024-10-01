@@ -1,0 +1,6 @@
+{
+  "flake8": "passing",
+  "pylint": "passing",
+  "mypy": "passing",
+  "yamllint": "passing"
+}
