@@ -103,18 +103,21 @@ jobs:
 
           FLAKE8="unknown"
           PYLINT="unknown"
+          RUFF="unknown"
           MYPY="unknown"
           YAMLLINT="unknown"
 
           if [ -f "static/validate/index.json" ]; then
             FLAKE8=$(jq -r '.flake8 // "unknown"' static/validate/index.json)
             PYLINT=$(jq -r '.pylint // "unknown"' static/validate/index.json)
+            RUFF=$(jq -r '.ruff // "unknown"' static/validate/index.json)
             MYPY=$(jq -r '.mypy // "unknown"' static/validate/index.json)
             YAMLLINT=$(jq -r '.yamllint // "unknown"' static/validate/index.json)
           fi
 
           echo "flake8=$FLAKE8" >> $GITHUB_ENV
           echo "pylint=$PYLINT" >> $GITHUB_ENV
+          echo "ruff=$RUFF" >> $GITHUB_ENV
           echo "mypy=$MYPY" >> $GITHUB_ENV
           echo "yamllint=$YAMLLINT" >> $GITHUB_ENV
 
@@ -125,17 +128,11 @@ jobs:
         run: |
 
           STATUS="${{ env.flake8 }}"
-          COLOR="gray"
-
-          if [[ "$STATUS" == "passing" ]]; then
-            COLOR="green"
-          elif [[ "$STATUS" == "failing" ]]; then
-            COLOR="red"
-          fi
 
           python makebadge.py \
-            "../static/badges/flake8.png" \
-            "Flake8" "$COLOR" "$STATUS"
+            --file "../static/badges/flake8.png" \
+            --label "Flake8" \
+            --value "$STATUS"
 
       # Construct additional content
       - name: Build badge for Pylint
@@ -143,17 +140,23 @@ jobs:
         run: |
 
           STATUS="${{ env.pylint }}"
-          COLOR="gray"
-
-          if [[ "$STATUS" == "passing" ]]; then
-            COLOR="green"
-          elif [[ "$STATUS" == "failing" ]]; then
-            COLOR="red"
-          fi
 
           python makebadge.py \
-            "../static/badges/pylint.png" \
-            "Pylint" "$COLOR" "$STATUS"
+            --file "../static/badges/pylint.png" \
+            --label "Pylint" \
+            --value "$STATUS"
+
+      # Construct additional content
+      - name: Build badge for Ruff
+        working-directory: main
+        run: |
+
+          STATUS="${{ env.ruff }}"
+
+          python makebadge.py \
+            --file "../static/badges/ruff.png" \
+            --label "Ruff" \
+            --value "$STATUS"
 
       # Construct additional content
       - name: Build badge for Mypy
@@ -161,17 +164,11 @@ jobs:
         run: |
 
           STATUS="${{ env.mypy }}"
-          COLOR="gray"
-
-          if [[ "$STATUS" == "passing" ]]; then
-            COLOR="green"
-          elif [[ "$STATUS" == "failing" ]]; then
-            COLOR="red"
-          fi
 
           python makebadge.py \
-            "../static/badges/mypy.png" \
-            "Mypy" "$COLOR" "$STATUS"
+            --file "../static/badges/mypy.png" \
+            --label "Mypy" \
+            --value "$STATUS"
 
       # Construct additional content
       - name: Build badge for YAMLlint
@@ -179,17 +176,11 @@ jobs:
         run: |
 
           STATUS="${{ env.yamllint }}"
-          COLOR="gray"
-
-          if [[ "$STATUS" == "passing" ]]; then
-            COLOR="green"
-          elif [[ "$STATUS" == "failing" ]]; then
-            COLOR="red"
-          fi
 
           python makebadge.py \
-            "../static/badges/yamllint.png" \
-            "YAMLlint" "$COLOR" "$STATUS"
+            --file "../static/badges/yamllint.png" \
+            --label "YAMLlint" \
+            --value "$STATUS"
 
 
       # Save content in static branch
