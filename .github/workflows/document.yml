@@ -88,9 +88,8 @@ jobs:
       - name: Build environment
         working-directory: main
         run: |
-          pip install \
-            encommon \
-            weasyprint wand
+          pip install encommon
+          pip install -r require.txt
 
       # Build the test environment
       - name: Build environment
