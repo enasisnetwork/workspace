@@ -57,15 +57,14 @@ jobs:
           path: static
 
 
-      # Standard project construction
+      # Build the test environment
       - name: Build environment
         working-directory: main
         run: |
-          pip install encommon
-          pip install -r require.txt
+          make -s venv-create
           pip install ansi2txt
 
-      # Standard project construction
+      # Build the test environment
       - name: Build environment
         working-directory: static
         run: mkdir -p validate
@@ -76,10 +75,9 @@ jobs:
         id: flake8
         working-directory: main
         run: |
-          output=$(flake8 makefile.py)
-          exit_code=$?
-          echo "$output" > ../static/validate/flake8.txt
-          exit $exit_code
+          set -oe pipefail
+          make -s flake8 \
+            | tee ../static/validate/flake8.txt
         continue-on-error: true
 
       # Validate the Python project
@@ -87,10 +85,9 @@ jobs:
         id: pylint
         working-directory: main
         run: |
-          output=$(pylint makefile.py)
-          exit_code=$?
-          echo "$output" > ../static/validate/pylint.txt
-          exit $exit_code
+          set -oe pipefail
+          make -s pylint \
+            | tee ../static/validate/pylint.txt
         continue-on-error: true
 
       # Validate the Python project
@@ -98,10 +95,9 @@ jobs:
         id: mypy
         working-directory: main
         run: |
-          output=$(mypy makefile.py)
-          exit_code=$?
-          echo "$output" > ../static/validate/mypy.txt
-          exit $exit_code
+          set -oe pipefail
+          make -s mypy \
+            | tee ../static/validate/mypy.txt
         continue-on-error: true
 
       # Validate the Python project
@@ -109,10 +105,9 @@ jobs:
         id: yamllint
         working-directory: main
         run: |
-          output=$(yamllint .yamllint .github)
-          exit_code=$?
-          echo "$output" > ../static/validate/yamllint.txt
-          exit $exit_code
+          set -oe pipefail
+          make -s yamllint \
+            | tee ../static/validate/yamllint.txt
         continue-on-error: true
 
 

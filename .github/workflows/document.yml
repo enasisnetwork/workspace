@@ -84,14 +84,15 @@ jobs:
           path: static
 
 
-      # Standard project construction
+      # Build the test environment
       - name: Build environment
         working-directory: main
         run: |
-          pip install encommon
-          pip install -r require.txt
+          pip install \
+            encommon \
+            weasyprint wand
 
-      # Standard project construction
+      # Build the test environment
       - name: Build environment
         working-directory: static
         run: mkdir -p badges
