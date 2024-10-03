@@ -61,7 +61,8 @@ jobs:
       - name: Build environment
         working-directory: main
         run: |
-          make -s venv-create
+          pip install encommon
+          pip install -r require.txt
           pip install ansi2txt
 
       # Build the test environment
