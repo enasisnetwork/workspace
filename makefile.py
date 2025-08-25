@@ -115,7 +115,8 @@ def makefile(
         r'\s+\@##\s([^\n]+)?\n')
 
     matches = re_findall(
-        pattern, contents, MULTILINE)
+        pattern, contents,
+        MULTILINE)
 
     if len(matches) == 0:
         return
@@ -127,7 +128,7 @@ def makefile(
 
 
 
-def children() -> None:
+def children() -> None:  # noqa: CFQ001
     """
     Locate and enumerate Makefiles from recipe directories.
     """
@@ -142,14 +143,25 @@ def children() -> None:
         key: str,
     ) -> Optional[str]:
 
-        matches = re_findall(
-            rf'^{key} \+?= ([^\n]+)',
-            content, MULTILINE)
+        pattern = (
+            rf'^{key}\s*\+?=\s*'
+            r'([^\n]+(?:\n[ \t]+'
+            r'[^\n]+)*)')
 
-        if len(matches) == 0:
+        matches = re_findall(
+            pattern, content,
+            MULTILINE)
+
+        if not matches:
             return None
 
-        return str(matches[-1])
+        newline = r'\\\n'
+        spaced = ' '
+
+        return (
+            str(matches[-1])
+            .replace(newline, spaced)
+            .strip())
 
 
     def _print(
@@ -166,12 +178,16 @@ def children() -> None:
         keys: str,
     ) -> list[str]:
 
-        keys = re_sub(r'\s{2,}', ' ', keys)
+        spaces = r'\s{2,}'
+        spaced = ' '
 
-        return keys.split(' ')
+        return (
+            re_sub(spaces, spaced, keys)
+            .split(' '))
 
 
     for file in makefiles:
+
         content = makeread(file)
 
         base = _value('WKSP_PROJKEY')
