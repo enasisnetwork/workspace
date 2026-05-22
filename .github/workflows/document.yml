@@ -44,30 +44,15 @@ jobs:
         with: {python-version: '3.12'}
 
       # Additional workflow dependency
-      - name: Compile ImageMagick
+      - name: Install ImageMagick
         run: |
 
           sudo apt-get update
 
           sudo apt-get install -y \
-            build-essential \
             ghostscript \
-            libjpeg-dev \
-            libpng-dev \
-            libtiff-dev \
-            libgif-dev
-
-          wget https://download.imagemagick.org/ImageMagick/download/ImageMagick.tar.gz
-
-          tar xvzf ImageMagick.tar.gz
-
-          cd ImageMagick-*
-
-          ./configure
-          make
-          sudo make install
-
-          sudo ldconfig /usr/local/lib
+            imagemagick \
+            libmagickwand-dev
 
 
       # Standard project construction
@@ -88,7 +73,7 @@ jobs:
       - name: Build environment
         working-directory: main
         run: |
-          pip install encommon
+          pip install enbasics[badges]
           pip install -r require.txt
 
       # Build the test environment
@@ -129,8 +114,8 @@ jobs:
 
           STATUS="${{ env.flake8 }}"
 
-          python makebadge.py \
-            --file "../static/badges/flake8.png" \
+          python -m enbasics.execution.badges \
+            --output "../static/badges/flake8.png" \
             --label "Flake8" \
             --value "$STATUS"
 
@@ -141,8 +126,8 @@ jobs:
 
           STATUS="${{ env.pylint }}"
 
-          python makebadge.py \
-            --file "../static/badges/pylint.png" \
+          python -m enbasics.execution.badges \
+            --output "../static/badges/pylint.png" \
             --label "Pylint" \
             --value "$STATUS"
 
@@ -153,8 +138,8 @@ jobs:
 
           STATUS="${{ env.ruff }}"
 
-          python makebadge.py \
-            --file "../static/badges/ruff.png" \
+          python -m enbasics.execution.badges \
+            --output "../static/badges/ruff.png" \
             --label "Ruff" \
             --value "$STATUS"
 
@@ -165,8 +150,8 @@ jobs:
 
           STATUS="${{ env.mypy }}"
 
-          python makebadge.py \
-            --file "../static/badges/mypy.png" \
+          python -m enbasics.execution.badges \
+            --output "../static/badges/mypy.png" \
             --label "Mypy" \
             --value "$STATUS"
 
@@ -177,8 +162,8 @@ jobs:
 
           STATUS="${{ env.yamllint }}"
 
-          python makebadge.py \
-            --file "../static/badges/yamllint.png" \
+          python -m enbasics.execution.badges \
+            --output "../static/badges/yamllint.png" \
             --label "YAMLlint" \
             --value "$STATUS"
 

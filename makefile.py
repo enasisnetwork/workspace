@@ -10,127 +10,47 @@ This file is present within multiple projects, simplifying dependency.
 
 
 from glob import glob
-from os import environ
 from pathlib import Path
 from re import MULTILINE
 from re import findall as re_findall
 from re import sub as re_sub
-from sys import stdout
-from typing import Literal
 from typing import Optional
 
-
-
-PROJECT = Path(__file__).parent
-
-VERSION = '1.2.11'
-
-COLOR = environ.get('COLOR', 7)
-
-PREFIX = Literal[
-    'text', 'base', 'more']
+from enbasics import makefile
+from enbasics import makeout
+from enbasics import makeread
 
 
 
-def makeout(
-    string: str,
-    prefix: Optional[PREFIX] = None,
+def workspace(
+    color: Optional[int] = 7,
 ) -> None:
-    """
-    Print the ANSI colorized string to the standard output.
-
-    .. note::
-       This function is forgiving due to use with Makefile.
-
-    :param string: String processed using inline directives.
-    :param prefix: Determine if and which prefix prepended.
-    """
-
-    pattern = r'\<c([\d\;]+)\>'
-    replace = r'\033[0;\1m'
-
-
-    if prefix is not None:
-
-        string = string.lstrip(' ')
-
-        padding = 3
-        _prefix = ''
-
-        if prefix == 'base':
-            padding = 0
-            _prefix = '<cL>>>><c0>'
-
-        elif prefix == 'more':
-            padding = 2
-            _prefix = '<cL>●<c0>'
-
-        space: str = ' '
-
-        string = (
-            f'{space * padding}'
-            f'{_prefix} {string}')
-
-
-    string = (
-        f'{string}\n'
-        .replace('<cD>', f'<c3{COLOR}>')
-        .replace('<cL>', f'<c9{COLOR}>'))
-
-    stdout.write(
-        re_sub(pattern, replace, string))
-
-
-
-def makeread(
-    path: str,
-) -> str:
-    """
-    Return the contents using the provided filesystem path.
-
-    :param path: Complete or relative path to the makefile.
-    :returns: Contents using the provided filesystem path.
-    """
-
-    return (
-        Path(path)
-        .read_text(encoding='utf-8'))
-
-
-
-def makefile(
-    path: str = 'Makefile',
-) -> None:
-    """
-    Print the Makefile summary in the human friendly format.
-
-    :param path: Complete or relative path to the makefile.
-    """
-
-    contents = makeread(path)
-
-    pattern = (
-        r'\n([a-z]\S+)\:(\s+\\\n)?'
-        r'((\s+[^\n]+){1,2})?\n'
-        r'\s+\@##\s([^\n]+)?\n')
-
-    matches = re_findall(
-        pattern, contents,
-        MULTILINE)
-
-    if len(matches) == 0:
-        return
-
-    for match in matches:
-        makeout(
-            f'  <c9{COLOR}>{match[0]}'
-            f'  <c0>{match[4]}')
-
-
-
-def children() -> None:  # noqa: CFQ001
     """
     Locate and enumerate Makefiles from recipe directories.
+
+    :param color: Optional color override default ANSI gray.
+    """
+
+    custom = Path('workspace.mk')
+
+    if not custom.exists():
+        return None
+
+    makeout(
+        '\n <c90>Workspace/'
+        f'<c37>{custom.name}<c0>')
+
+    makefile(custom, color=color)
+
+
+
+def children(  # noqa: CFQ001
+    color: Optional[int] = 7,
+) -> None:
+    """
+    Locate and enumerate Makefiles from recipe directories.
+
+    :param color: Optional color override default ANSI gray.
     """
 
     makefiles = sorted(
@@ -170,7 +90,8 @@ def children() -> None:  # noqa: CFQ001
     ) -> None:
 
         makeout(
-            f'  <c9{COLOR}>{recipe}'
+            f'  <c9{color}>'
+            f'{recipe}'
             f'  <c0>{about}')
 
 
@@ -240,25 +161,4 @@ def children() -> None:  # noqa: CFQ001
                     ' Git repository')
 
         if file != 'workspace.mk':
-            makefile(file)
-
-
-
-if __name__ == '__main__':
-
-    makeout(
-        f' <c97>{PROJECT.name}/<c0>'
-        f'<c37>{VERSION}<c0>'
-        f' <c90>Makefile<c0>\n')
-
-    makefile()
-
-    if Path('workspace.mk').exists():
-
-        makeout(
-            '\n <c90>Workspace/'
-            '<c37>workspace.mk<c0>')
-
-        makefile('workspace.mk')
-
-    children()
+            makefile(file, color=color)

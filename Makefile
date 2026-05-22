@@ -7,7 +7,7 @@
 
 
 
-PYTHON ?= /usr/bin/env python3
+PYTHON ?= python
 
 
 
@@ -15,12 +15,15 @@ PYTHON ?= /usr/bin/env python3
 
 
 
-MAKE_COLOR ?= 6
+MAKE_COLOR = 6
 
-MAKE_PRINT = @COLOR=$(MAKE_COLOR) \
-	$(PYTHON) -Bc 'if 1: \
-		from makefile import makeout; \
-		makeout("$(1)", "$(2)");'
+MAKE_PRINT = \
+	@$(PYTHON) -Bc 'if 1: \
+		from enbasics import makeout; \
+		makeout( \
+			color=$(MAKE_COLOR), \
+			string="$(1)", \
+			prefix="$(2)");'
 
 MAKE_PR1NT = $(call MAKE_PRINT,$(1),text)
 MAKE_PR2NT = $(call MAKE_PRINT,$(1),base)
@@ -32,8 +35,17 @@ MAKE_PR3NT = $(call MAKE_PRINT,$(1),more)
 help:
 	@## Construct this helpful menu of recipes
 	$(call MAKE_PRINT)
-	@COLOR=$(MAKE_COLOR) \
-		$(PYTHON) -B makefile.py
+	@$(PYTHON) -Bc 'if 1: \
+		from enbasics import makefile; \
+		from makefile import children; \
+		from makefile import workspace; \
+		makefile( \
+			color=$(MAKE_COLOR), \
+			path="Makefile", \
+			name="workspace", \
+			version="1.2.11"); \
+		children($(MAKE_COLOR)); \
+		workspace($(MAKE_COLOR));'
 	$(call MAKE_PRINT)
 
 
@@ -61,12 +73,16 @@ setup:
 	@mkdir -p Temporary
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.11.10
-	@ln -sr Execution/PyEnv/versions/3.11.10 \
+	@if [ ! -d 'Execution/PyEnv/versions/3.11.10' ]; then \
+		$(MAKE) pyenv-install pyenv_version=3.11.10; \
+	fi
+	@ln -srf Execution/PyEnv/versions/3.11.10 \
 		Execution/python311
 	@#
-	$(MAKE) pyenv-install pyenv_version=3.12.6
-	@ln -sr Execution/PyEnv/versions/3.12.6 \
+	@if [ ! -d 'Execution/PyEnv/versions/3.12.6' ]; then \
+		$(MAKE) pyenv-install pyenv_version=3.12.6; \
+	fi
+	@ln -srf Execution/PyEnv/versions/3.12.6 \
 		Execution/python312
 
 
@@ -124,8 +140,8 @@ pyenv-remove:
 	$(call MAKE_PR3NT,\
 		<c37>Removing <c90>PyEnv<c37>\
 		symbolic Python links..<c0>)
-	@rm Execution/python311
-	@rm Execution/python312
+	@rm -f Execution/python311
+	@rm -f Execution/python312
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
@@ -148,7 +164,7 @@ endif
 	@Execution/PyEnv/versions/$(pyenv_version)/bin/python \
 		-m pip install --upgrade pip
 	@Execution/PyEnv/versions/$(pyenv_version)/bin/python \
-		-m pip install pyyaml selinux
+		-m pip install pyyaml selinux enbasics
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 

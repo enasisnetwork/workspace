@@ -13,7 +13,6 @@
 !/.yamllint
 !/LICENSE
 !/Makefile
-!/makebadge.py
 !/makefile.py
 !/README.md
 !/require.txt
