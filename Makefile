@@ -15,7 +15,7 @@ PYTHON ?= python
 
 
 
-MAKE_COLOR = 6
+MAKE_COLOR ?= 6
 
 MAKE_PRINT = \
 	@$(PYTHON) -Bc 'if 1: \
