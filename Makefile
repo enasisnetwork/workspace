@@ -84,6 +84,10 @@ setup:
 	fi
 	@ln -srf Execution/PyEnv/versions/3.12.6 \
 		Execution/python312
+	@#
+	$(MAKE) nvm-install nvm_version=24.16.0
+	@ln -srf Execution/nvm/versions/node/v24.16.0 \
+		Execution/nodejs24
 
 
 
@@ -165,6 +169,85 @@ endif
 		-m pip install --upgrade pip
 	@Execution/PyEnv/versions/$(pyenv_version)/bin/python \
 		-m pip install pyyaml selinux enbasics
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+
+
+
+.PHONY: nvm-clone
+nvm-clone:
+	@## Clone the NVM project into execution
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>nvm-clone<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Cloning <c90>nvm<c37>\
+		project repository..<c0>)
+	@if [ ! -d 'Execution/nvm' ]; then \
+		git clone https://github.com/nvm-sh/nvm.git \
+		Execution/nvm 2>/dev/null; \
+	fi
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+
+
+
+.PHONY: nvm-update
+nvm-update:
+	@## Update local copy of NVM repository
+	@#
+	$(MAKE) nvm-clone
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>nvm-update<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Updating <c90>nvm<c37>\
+		project repository..<c0>)
+	@cd Execution/nvm \
+		&& git remote update 1>/dev/null \
+		&& git pull --rebase 1>/dev/null
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+
+
+
+.PHONY: nvm-remove
+nvm-remove:
+	@## Remove local copy of NVM repository
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>nvm-remove<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Removing <c90>nvm<c37>\
+		project repository..<c0>)
+	@rm -rf Execution/nvm
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+	@#
+	$(call MAKE_PR3NT,\
+		<c37>Removing <c90>nvm<c37>\
+		symbolic NodeJS links..<c0>)
+	@rm -f Execution/nodejs24
+	$(call MAKE_PR1NT,<cD>DONE<c0>)
+
+
+
+.PHONY: nvm-install
+nvm-install:
+	@## Download and setup the NodeJS version
+	@#
+	$(MAKE) nvm-update
+	@#
+	$(call MAKE_PR2NT,\
+		<cD>make <cL>nvm-install<c0>)
+	@#
+ifndef nvm_version
+	$(error nvm_version variable is not defined)
+endif
+	@NVM_DIR=$(CURDIR)/Execution/nvm \
+		bash -c '. Execution/nvm/nvm.sh \
+		&& nvm install $(nvm_version) \
+		&& corepack enable --install-directory \
+		$(CURDIR)/Execution/nvm/versions/node/v$(nvm_version)/bin'
 	$(call MAKE_PR1NT,<cD>DONE<c0>)
 
 
