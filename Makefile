@@ -43,7 +43,7 @@ help:
 			color=$(MAKE_COLOR), \
 			path="Makefile", \
 			name="workspace", \
-			version="1.2.11"); \
+			version="1.2.12"); \
 		children($(MAKE_COLOR)); \
 		workspace($(MAKE_COLOR));'
 	$(call MAKE_PRINT)
